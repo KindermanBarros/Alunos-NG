@@ -26,6 +26,15 @@ export const createUser = async (
   }
 };
 
+export const getUser = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const user = await userService.getUser(Number(req.params.id));
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch user" });
+  }
+};
+
 export const updateUser = async (
   req: Request,
   res: Response
@@ -63,5 +72,62 @@ export const deleteUser = async (
     }
   } catch (error) {
     res.status(500).json({ error: "Failed to delete user" });
+  }
+};
+
+export const uploadImage = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const { id } = req.params;
+  const userId = parseInt(id, 10);
+
+  if (isNaN(userId)) {
+    res.status(400).json({ message: "Invalid user ID" });
+    return;
+  }
+
+  if (!req.file) {
+    res.status(400).json({ message: "No file uploaded" });
+    return;
+  }
+
+  try {
+    const updatedUser = await userService.uploadImage(userId, req.file);
+
+    res.status(200).json({
+      message: "File uploaded successfully",
+      user: updatedUser,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to upload file",
+      error: error.message,
+    });
+  }
+};
+
+export const getUserImage = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const id = parseInt(req.params.id, 10);
+
+  if (isNaN(id)) {
+    res.status(400).json({ message: "Invalid user ID" });
+    return;
+  }
+
+  try {
+    const image = await userService.getUserImage(id);
+
+    res.status(200).json({
+      message: "Image retrieved successfully",
+      image: image,
+    });
+  } catch (error) {
+    res.status(404).json({
+      message: error.message,
+    });
   }
 };

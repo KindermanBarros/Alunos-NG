@@ -1,8 +1,10 @@
 import express from "express";
 import http from "http";
-import { corsHandler } from "./config/corsHandler";
+import { corsHandler } from "./utils/corsHandler";
 import { SERVER_PORT } from "./config/config";
 import userRoutes from "./routes/userRoutes";
+import upload from "./utils/uploadHandler"; // Import the upload handler
+import { PrismaClient } from "@prisma/client";
 
 export const app = express();
 export let httpServer: http.Server;
