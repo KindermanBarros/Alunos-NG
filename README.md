@@ -1,2 +1,3 @@
 # Alunos-NG
-Projeto desenvolvido durante o motoacademy para criar uma API Rest com um frontend em Angular
+
+This project was developed during MotoAcademy to create a RESTful API with a frontend built in Angular
