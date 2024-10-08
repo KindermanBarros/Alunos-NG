@@ -1,8 +1,18 @@
-<div class="search-container">
+<div class="input-group mb-1 mt-1 col-2" id="search-container">
   <input
     type="text"
+    class="form-control"
+    aria-label="Digite sua pesquisa..."
     placeholder="Digite sua pesquisa..."
+    aria-describedby="basic-addon2"
     [(ngModel)]="searchQuery"
   />
-  <button (click)="onSearch()">Buscar</button>
+  <button
+    type="button"
+    class="input-group-text"
+    id="basic-addon2"
+    (click)="onSearch()"
+  >
+    Buscar
+  </button>
 </div>
