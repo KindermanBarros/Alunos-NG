@@ -1,0 +1,9 @@
+<div class="alunos-container">
+    <h2>Lista de Alunos</h2>
+    <div class="alunos-cards">
+      <div *ngFor="let aluno of alunos" class="aluno-card" (click)="selectAluno(aluno)">
+        <h3>{{ aluno.nome }}</h3>
+      </div>
+    </div>
+  </div>
+  
