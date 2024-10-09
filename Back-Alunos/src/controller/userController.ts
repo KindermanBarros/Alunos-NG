@@ -19,10 +19,37 @@ export const createUser = async (
 ): Promise<void> => {
   const { email, name, school } = req.body;
   try {
-    await userService.createUser(email, name, school);
-    res.status(201).json({ message: "User created successfully" });
+    const createdUser = await userService.createUser(email, name, school);
+    res.status(201).json({ user: createdUser });
   } catch (error) {
     res.status(500).json({ error: "Failed to create user" });
+  }
+};
+
+export const getUserById = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const { email, name, school } = req.query;
+
+  if (!email || !name || !school) {
+    res.status(400).json({ error: "Missing required query parameters" });
+    return;
+  }
+
+  try {
+    const user = await userService.getId(
+      email as string,
+      name as string,
+      school as string
+    );
+    if (user) {
+      res.status(200).json(user);
+    } else {
+      res.status(404).json({ error: "User not found" });
+    }
+  } catch (error) {
+    res.status(500).json({ error: "Failed to retrieve user" });
   }
 };
 

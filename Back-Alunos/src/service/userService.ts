@@ -26,18 +26,30 @@ const getAllUsers = async (): Promise<UserResponse[]> => {
   }));
 };
 
-const createUser = async (
+export const createUser = async (
   email: string,
   name: string | null,
   school: string
-): Promise<void> => {
-  await prisma.user.create({
+): Promise<User> => {
+  const user = await prisma.user.create({
     data: {
       email,
       name,
       school,
     },
   });
+  return user;
+};
+
+const getId = async (
+  email: string,
+  name: string,
+  school: string
+): Promise<User | null> => {
+  const user = await prisma.user.findUnique({
+    where: { email, name, school },
+  });
+  return user;
 };
 
 const getUser = async (id: number): Promise<User | null> => {
@@ -139,4 +151,5 @@ export const userService = {
   deleteUser,
   uploadImage,
   getUserImage,
+  getId,
 };

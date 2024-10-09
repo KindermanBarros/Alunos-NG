@@ -7,6 +7,7 @@ import {
   updateUser,
   uploadImage,
   getUser,
+  getUserById,
 } from "../controller/userController";
 import upload from "../utils/uploadHandler";
 
@@ -29,6 +30,10 @@ router.post(
 );
 router.get("/upload/:id", (req: Request, res: Response) =>
   getUserImage(req, res)
+);
+
+router.get("/usuarios/find", (req: Request, res: Response) =>
+  getUserById(req, res)
 );
 
 export default router;
