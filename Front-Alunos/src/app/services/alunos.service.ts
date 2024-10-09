@@ -26,14 +26,14 @@ export class AlunosService {
     return this.http.post<IAluno>(this.apiUrl, { email, name, school });
   }
 
+  deleteAluno(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
   uploadImage(id: number, file: File): Observable<unknown> {
     const formData: FormData = new FormData();
     formData.append('file', file, file.name);
     return this.http.post(`${this.uploadUrl}/${id}`, formData);
-  }
-
-  deleteAluno(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
   getUserImage(id: number): Observable<string> {
