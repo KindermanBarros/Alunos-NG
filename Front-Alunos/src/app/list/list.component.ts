@@ -141,6 +141,7 @@ export class ListComponent implements OnInit {
         console.error('Error creating user', error);
       },
     });
+    this.form.reset();
   }
 
   editBtn = 'Editar';

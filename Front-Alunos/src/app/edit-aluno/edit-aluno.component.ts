@@ -32,6 +32,7 @@ export class EditAlunoComponent implements OnInit {
       id: [{ value: '', disabled: true }],
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
+      school: ['', Validators.required],
     });
   }
 
@@ -51,6 +52,7 @@ export class EditAlunoComponent implements OnInit {
       this.alunosService
         .updateAluno(Number(updatedAluno.id), updatedAluno)
         .subscribe(() => {
+          this.alunoForm.reset(); // Reset the form after successful submission
           this.router.navigate(['/details', updatedAluno.id]);
         });
     }
