@@ -107,30 +107,18 @@ export const uploadImage = async (
   res: Response
 ): Promise<void> => {
   const { id } = req.params;
-  const userId = parseInt(id, 10);
+  const file = req.file;
 
-  if (isNaN(userId)) {
-    res.status(400).json({ message: "Invalid user ID" });
-    return;
-  }
-
-  if (!req.file) {
-    res.status(400).json({ message: "No file uploaded" });
+  if (!file) {
+    res.status(400).json({ error: "No file uploaded" });
     return;
   }
 
   try {
-    const updatedUser = await userService.uploadImage(userId, req.file);
-
-    res.status(200).json({
-      message: "File uploaded successfully",
-      user: updatedUser,
-    });
+    const updatedUser = await userService.uploadImage(Number(id), file);
+    res.status(200).json(updatedUser);
   } catch (error) {
-    res.status(500).json({
-      message: "Failed to upload file",
-      error: error.message,
-    });
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -138,23 +126,12 @@ export const getUserImage = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  const id = parseInt(req.params.id, 10);
-
-  if (isNaN(id)) {
-    res.status(400).json({ message: "Invalid user ID" });
-    return;
-  }
+  const { id } = req.params;
 
   try {
-    const image = await userService.getUserImage(id);
-
-    res.status(200).json({
-      message: "Image retrieved successfully",
-      image: image,
-    });
+    const image = await userService.getUserImage(Number(id));
+    res.status(200).json({ image });
   } catch (error) {
-    res.status(404).json({
-      message: error.message,
-    });
+    res.status(500).json({ error: error.message });
   }
 };

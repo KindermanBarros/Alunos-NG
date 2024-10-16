@@ -15,8 +15,8 @@ const storage = multer.diskStorage({
     const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
     const extension = path.extname(file.originalname);
     const newFilename = `${uniqueSuffix}${extension}`;
-    const filePath = path.join(uploadDir, newFilename);
 
+    const filePath = path.join(uploadDir, newFilename);
     if (fs.existsSync(filePath)) {
       fs.unlinkSync(filePath);
     }

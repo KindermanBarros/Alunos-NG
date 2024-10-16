@@ -21,6 +21,7 @@ import { HttpClientModule } from '@angular/common/http';
 export class EditAlunoComponent implements OnInit {
   alunoForm: FormGroup;
   aluno: IAluno | undefined;
+  selectedFile: File | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -46,14 +47,30 @@ export class EditAlunoComponent implements OnInit {
     }
   }
 
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedFile = input.files[0];
+    }
+  }
+
   onSubmit(): void {
     if (this.alunoForm.valid) {
       const updatedAluno = { ...this.aluno, ...this.alunoForm.value };
       this.alunosService
         .updateAluno(Number(updatedAluno.id), updatedAluno)
         .subscribe(() => {
-          this.alunoForm.reset(); // Reset the form after successful submission
-          this.router.navigate(['/details', updatedAluno.id]);
+          if (this.selectedFile) {
+            this.alunosService
+              .uploadImage(Number(updatedAluno.id), this.selectedFile)
+              .subscribe(() => {
+                this.alunoForm.reset();
+                this.router.navigate(['/details', updatedAluno.id]);
+              });
+          } else {
+            this.alunoForm.reset();
+            this.router.navigate(['/details', updatedAluno.id]);
+          }
         });
     }
   }

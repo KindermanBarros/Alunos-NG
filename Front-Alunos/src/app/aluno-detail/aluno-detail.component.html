@@ -4,10 +4,22 @@
       <h2 class="card-title">Detalhes do Aluno</h2>
     </div>
     <div class="card-body">
-      <p class="card-text"><strong>Id:</strong> {{ aluno?.id }}</p>
-      <p class="card-text"><strong>Nome:</strong> {{ aluno?.name }}</p>
-      <p class="card-text"><strong>Email:</strong> {{ aluno?.email }}</p>
-      <p class="card-text"><strong>Escola:</strong> {{ aluno?.school }}</p>
+      <div class="row align-items-center">
+        <div class="col-md-3 d-flex justify-content-center">
+          <img
+            [src]="imageUrl"
+            alt="Imagem do Aluno"
+            class="img-fluid rounded-circle"
+            style="width: 150px; height: 150px; object-fit: cover"
+          />
+        </div>
+        <div class="col-md-9">
+          <p class="card-text"><strong>Id:</strong> {{ aluno?.id }}</p>
+          <p class="card-text"><strong>Nome:</strong> {{ aluno?.name }}</p>
+          <p class="card-text"><strong>Email:</strong> {{ aluno?.email }}</p>
+          <p class="card-text"><strong>Escola:</strong> {{ aluno?.school }}</p>
+        </div>
+      </div>
     </div>
   </div>
 </div>

@@ -88,23 +88,10 @@ const uploadImage = async (id: number, file: Express.Multer.File) => {
   const filePath = path.join(uploadDir, file.filename);
 
   try {
-    const user = await prisma.user.findUnique({
-      where: { id: id },
-      select: { image: true },
-    });
-
-    if (user && user.image) {
-      console.log(`User with ID: ${id} already has an image.`);
-      return user;
-    }
-
     console.log(`Reading file from: ${filePath}`);
     const fileBuffer = fs.readFileSync(filePath);
     const base64Image = fileBuffer.toString("base64");
-    const newFilePath = path.join(
-      uploadDir,
-      `${id}${path.extname(file.filename)}`
-    );
+    const newFilePath = path.join(uploadDir, `${id}.png`);
 
     console.log(`Updating user with ID: ${id}`);
     const updatedUser = await prisma.user.update({

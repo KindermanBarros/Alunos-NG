@@ -23,14 +23,9 @@ router.delete("/usuarios/:id", (req: Request, res: Response) =>
   deleteUser(req, res)
 );
 
-router.post(
-  "/upload/:id",
-  upload.single("file"),
-  (req: Request, res: Response) => uploadImage(req, res)
-);
-router.get("/upload/:id", (req: Request, res: Response) =>
-  getUserImage(req, res)
-);
+router.post("/upload/:id", upload.single("file"), uploadImage);
+
+router.get("/upload/:id/image", getUserImage);
 
 router.get("/usuarios/find", (req: Request, res: Response) =>
   getUserById(req, res)

@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { IAluno } from '../models/IAluno';
-import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -36,12 +35,8 @@ export class AlunosService {
     return this.http.post(`${this.uploadUrl}/${id}`, formData);
   }
 
-  getUserImage(id: number): Observable<string> {
-    return this.http
-      .get(`${this.uploadUrl}/${id}`, { responseType: 'text' })
-      .pipe(
-        map((base64String: string) => `data:image/jpeg;base64,${base64String}`)
-      );
+  getUserImage(id: number): Observable<{ image: string }> {
+    return this.http.get<{ image: string }>(`${this.uploadUrl}/${id}/image`);
   }
 
   updateAluno(id: number, aluno: IAluno): Observable<IAluno> {
